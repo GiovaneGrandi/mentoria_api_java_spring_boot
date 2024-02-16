@@ -17,9 +17,9 @@ public class ClienteRepositoryTeste {
         String cpf = "123456789";
         Cliente cliente = new Cliente(5L, cpf, "Nome do Cliente");
 
-        clienteRepository.salva(cliente);
+        clienteRepository.criaCliente(cliente);
 
-        Cliente resultado = clienteRepository.localizaPorCpf(cpf);
+        Cliente resultado = clienteRepository.pegaClientePorCpf(cpf);
 
         assertNotNull(resultado);
         assertEquals(cliente.getCodigo(), resultado.getCodigo());
@@ -30,7 +30,7 @@ public class ClienteRepositoryTeste {
     @Test
     public void testFindByCpfNotFound() {
         String cpfNaoExistente = "987654321";
-        Cliente resultado = clienteRepository.localizaPorCpf(cpfNaoExistente);
+        Cliente resultado = clienteRepository.pegaClientePorCpf(cpfNaoExistente);
 
         assertNull(resultado);
     }

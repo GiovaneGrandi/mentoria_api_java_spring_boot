@@ -8,38 +8,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/api/clientes")
 public class ClienteController {
 
-    private final ClienteRepository clienteRepository;
-
     @Autowired
-    public ClienteController(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
+    private ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<Cliente> listarClientes() {
-        return clienteRepository.findAll();
+    public List<Cliente> retornaTodosClientes() {
+        return clienteRepository.pegaTodosClientes();
     }
 
     @GetMapping("/{cpf}")
-    public Cliente obterClientePorCpf(@PathVariable String cpf) {
-        return clienteRepository.localizaPorCpf(cpf);
+    public Cliente retornaClientePeloCodigo(@PathVariable String cpf) {
+        return clienteRepository.pegaClientePorCpf(cpf);
     }
 
     @PostMapping
-    public Cliente adicionarCliente(@RequestBody Cliente cliente) {
-        return clienteRepository.salva(cliente);
+    public void salvaCliente(@RequestBody Cliente cliente) {
+        clienteRepository.criaCliente(cliente);
     }
 
-    @PutMapping("/{cpf}")
-    public Cliente atualizarCliente(@PathVariable String cpf, @RequestBody Cliente clienteAtualizado) {
-        return clienteAtualizado;
+    @PutMapping("/{codigo}")
+    public void atualizaCliente(@PathVariable Long codigo, @RequestBody Cliente cliente) {
+        clienteRepository.atualizaCliente(codigo, cliente);
     }
 
-    @DeleteMapping("/{cpf}")
-    public void deletarCliente(@PathVariable String cpf) {
+    @DeleteMapping("/{codigo}")
+    public void deletaCliente(@PathVariable Long codigo) {
+        clienteRepository.excluiCliente(codigo);
     }
 
 }

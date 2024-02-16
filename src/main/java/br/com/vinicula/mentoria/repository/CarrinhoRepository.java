@@ -17,19 +17,19 @@ public class CarrinhoRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public List<Carrinho> getAllCarrinhos() {
+    public List<Carrinho> pegaTodosCarrinhos() {
         String sql = "SELECT * FROM tbcarrinho";
         return jdbcTemplate.query(sql, new CarrinhoRowMapper());
     }
 
-    public Carrinho getCarrinhoById(Long codigo) {
+    public Carrinho pegaCarrinhoPorCodigo(Long codigo) {
         String sql = "SELECT * FROM tbcarrinho WHERE pkcodigocar = :codigo";
         Map<String, Object> params = new HashMap<>();
         params.put("codigo", codigo);
         return jdbcTemplate.queryForObject(sql, params, new CarrinhoRowMapper());
     }
 
-    public void createCarrinho(Carrinho carrinho) {
+    public void criaCarrinho(Carrinho carrinho) {
         String sql = "INSERT INTO tbcarrinho (estadocar, fkcodigocli) VALUES (:estado, :codigocli)";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("estado", carrinho.getEstado());
@@ -37,7 +37,7 @@ public class CarrinhoRepository {
         jdbcTemplate.update(sql, params);
     }
 
-    public void updateCarrinho(Long codigo, Carrinho carrinho) {
+    public void atualizaCarrinho(Long codigo, Carrinho carrinho) {
         String sql = "UPDATE tbcarrinho SET estadocar = :estado, fkcodigocli = :codigocli WHERE pkcodigocar = :codigo";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("codigo", codigo);
@@ -46,7 +46,7 @@ public class CarrinhoRepository {
         jdbcTemplate.update(sql, params);
     }
 
-    public void deleteCarrinho(Long codigo) {
+    public void excluiCarrinho(Long codigo) {
         String sql = "DELETE FROM tbcarrinho WHERE pkcodigocar = :codigo";
         Map<String, Object> params = new HashMap<>();
         params.put("codigo", codigo);

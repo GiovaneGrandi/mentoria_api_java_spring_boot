@@ -1,7 +1,7 @@
 package br.com.vinicula.mentoria.model;
 
 public class Cliente {
-    private Long codigo;
+    private long codigo;
     private String cpf;
     private String nome;
 
@@ -11,27 +11,16 @@ public class Cliente {
         this.nome = nomecli;
     }
 
-    public Long getCodigo() {
+    public long getCodigo() {
         return codigo;
-    }
-
-    public void setCodigo(Long id) {
-        this.codigo = id;
     }
 
     public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 }

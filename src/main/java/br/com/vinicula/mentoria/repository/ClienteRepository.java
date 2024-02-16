@@ -3,7 +3,7 @@ package br.com.vinicula.mentoria.repository;
 import br.com.vinicula.mentoria.mapper.ClienteRowMapper;
 import br.com.vinicula.mentoria.model.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,50 +14,43 @@ import java.util.Map;
 @Repository
 public class ClienteRepository {
 
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
     @Autowired
-    public ClienteRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
+    public List<Cliente> pegaTodosClientes() {
+        String sql = "SELECT * FROM tbcliente";
+        return jdbcTemplate.query(sql, new ClienteRowMapper());
     }
 
-    public Cliente localizaPorCpf(String cpf) {
+    public Cliente pegaClientePorCpf(String cpf) {
         String sql = "SELECT * FROM tbcliente WHERE cpfcli = :cpf";
-
         Map<String, Object> params = new HashMap<>();
         params.put("cpf", cpf);
-
-        try {
-            return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) ->
-                    new Cliente(
-                            rs.getLong("pkcodigocli"),
-                            rs.getString("cpfcli"),
-                            rs.getString("nomecli")
-                    )
-            );
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+        return jdbcTemplate.queryForObject(sql, params, new ClienteRowMapper());
     }
 
-    public Cliente salva(Cliente cliente) {
-        String sql = "INSERT INTO tbcliente (pkcodigocli, cpfcli, nomecli) " +
-                "VALUES (:codigo, :cpf, :nome)";
+    public void criaCliente(Cliente cliente) {
+        String sql = "INSERT INTO tbcliente (cpfcli, nomecli) VALUES (:cpf, :nome)";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("cpf", cliente.getCpf());
+        params.addValue("nome", cliente.getNome());
+        jdbcTemplate.update(sql, params);
+    }
 
+    public void atualizaCliente(Long codigo, Cliente cliente) {
+        String sql = "UPDATE tbcliente SET cpfcli = :cpf, nomecli = :nome WHERE pkcodigocli = :codigo";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("codigo", codigo);
+        params.addValue("cpf", cliente.getCpf());
+        params.addValue("nome", cliente.getNome());
+        jdbcTemplate.update(sql, params);
+    }
+
+    public void excluiCliente(Long codigo) {
+        String sql = "DELETE FROM tbcliente WHERE pkcodigocli = :codigo";
         Map<String, Object> params = new HashMap<>();
-        params.put("id", cliente.getCodigo());
-        params.put("cpf", cliente.getCpf());
-        params.put("nome", cliente.getNome());
-
-        namedParameterJdbcTemplate.update(sql, params);
-
-        return cliente;
-    }
-
-    public List<Cliente> findAll() {
-        String sql = "SELECT * FROM tbcliente";
-
-        return namedParameterJdbcTemplate.query(sql, new ClienteRowMapper());
+        params.put("codigo", codigo);
+        jdbcTemplate.update(sql, params);
     }
 
 }

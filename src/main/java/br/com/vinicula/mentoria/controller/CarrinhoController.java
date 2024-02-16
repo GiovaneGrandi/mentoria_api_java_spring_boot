@@ -15,28 +15,28 @@ public class CarrinhoController {
     private CarrinhoRepository carrinhoRepository;
 
     @GetMapping
-    public List<Carrinho> getAllCarrinhos() {
-        return carrinhoRepository.getAllCarrinhos();
+    public List<Carrinho> retornaTodosCarrinhos() {
+        return carrinhoRepository.pegaTodosCarrinhos();
     }
 
     @GetMapping("/{codigo}")
-    public Carrinho getCarrinhoById(@PathVariable Long codigo) {
-        return carrinhoRepository.getCarrinhoById(codigo);
+    public Carrinho retornaCarrinhoPeloCodigo(@PathVariable Long codigo) {
+        return carrinhoRepository.pegaCarrinhoPorCodigo(codigo);
     }
 
     @PostMapping
-    public void createCarrinho(@RequestBody Carrinho carrinho) {
-        carrinhoRepository.createCarrinho(carrinho);
+    public void salvaCarrinho(@RequestBody Carrinho carrinho) {
+        carrinhoRepository.criaCarrinho(carrinho);
     }
 
     @PutMapping("/{codigo}")
-    public void updateCarrinho(@PathVariable Long codigo, @RequestBody Carrinho carrinho) {
-        carrinhoRepository.updateCarrinho(codigo, carrinho);
+    public void atualizaCarrinho(@PathVariable Long codigo, @RequestBody Carrinho carrinho) {
+        carrinhoRepository.atualizaCarrinho(codigo, carrinho);
     }
 
     @DeleteMapping("/{codigo}")
-    public void deleteCarrinho(@PathVariable Long codigo) {
-        carrinhoRepository.deleteCarrinho(codigo);
+    public void deletaCarrinho(@PathVariable Long codigo) {
+        carrinhoRepository.excluiCarrinho(codigo);
     }
 
 }
