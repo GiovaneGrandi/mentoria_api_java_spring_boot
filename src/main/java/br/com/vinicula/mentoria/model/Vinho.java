@@ -4,12 +4,12 @@ public class Vinho {
 
     private long codigo;
     private String nome;
-    private float preco;
-    private int ano;
+    private Float preco;
+    private Integer ano;
     private String pais;
-    private int estoque;
-    private long codigoCategoria;
-    private long codigoTipo;
+    private Integer estoque;
+    private Long codigoCategoria;
+    private Long codigoTipo;
 
     public Vinho(long codigo, String nome, float preco, int ano, String pais, int estoque, long codigoCategoria, long codigoTipo) {
         this.codigo = codigo;
@@ -30,11 +30,11 @@ public class Vinho {
         return nome;
     }
 
-    public float getPreco() {
+    public Float getPreco() {
         return preco;
     }
 
-    public int getAno() {
+    public Integer getAno() {
         return ano;
     }
 
@@ -42,15 +42,15 @@ public class Vinho {
         return pais;
     }
 
-    public int getEstoque() {
+    public Integer getEstoque() {
         return estoque;
     }
 
-    public long getCodigoCategoria() {
+    public Long getCodigoCategoria() {
         return codigoCategoria;
     }
 
-    public long getCodigoTipo() {
+    public Long getCodigoTipo() {
         return codigoTipo;
     }
 }

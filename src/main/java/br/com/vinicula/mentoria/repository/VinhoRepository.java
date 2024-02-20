@@ -46,19 +46,50 @@ public class VinhoRepository {
     }
 
     public void atualizaVinho(Long codigo, Vinho vinho) {
-        String sql = "UPDATE tbvinho SET nomevin = :nome, precovin = :preco, anovin = :ano, paisvin = :pais, " +
-                "estoquevin = :estoque, fkcodigocat = :codigoCategoria, fkcodigotip = :codigoTipo " +
-                "WHERE pkcodigovin = :codigo";
+        StringBuilder sqlBuilder = new StringBuilder("UPDATE tbvinho SET ");
         MapSqlParameterSource params = new MapSqlParameterSource();
+
+        if (vinho.getNome() != null) {
+            sqlBuilder.append("nomevin = :nome, ");
+            params.addValue("nome", vinho.getNome());
+        }
+
+        if (vinho.getPreco() != null) {
+            sqlBuilder.append("precovin = :preco, ");
+            params.addValue("preco", vinho.getPreco());
+        }
+
+        if (vinho.getAno() != null) {
+            sqlBuilder.append("anovin = :ano, ");
+            params.addValue("ano", vinho.getAno());
+        }
+
+        if (vinho.getPais() != null) {
+            sqlBuilder.append("paisvin = :pais, ");
+            params.addValue("pais", vinho.getPais());
+        }
+
+        if (vinho.getEstoque() != null) {
+            sqlBuilder.append("estoquevin = :estoque, ");
+            params.addValue("estoque", vinho.getEstoque());
+        }
+
+        if (vinho.getCodigoCategoria() != null) {
+            sqlBuilder.append("fkcodigocat = :codigoCategoria, ");
+            params.addValue("codigoCategoria", vinho.getCodigoCategoria());
+        }
+
+        if (vinho.getCodigoTipo() != null) {
+            sqlBuilder.append("fkcodigotip = :codigoTipo, ");
+            params.addValue("codigoTipo", vinho.getCodigoTipo());
+        }
+
+        sqlBuilder.delete(sqlBuilder.length() - 2, sqlBuilder.length());
+        sqlBuilder.append(" WHERE pkcodigovin = :codigo");
+
         params.addValue("codigo", codigo);
-        params.addValue("nome", vinho.getNome());
-        params.addValue("preco", vinho.getPreco());
-        params.addValue("ano", vinho.getAno());
-        params.addValue("pais", vinho.getPais());
-        params.addValue("estoque", vinho.getEstoque());
-        params.addValue("codigoCategoria", vinho.getCodigoCategoria());
-        params.addValue("codigoTipo", vinho.getCodigoTipo());
-        jdbcTemplate.update(sql, params);
+
+        jdbcTemplate.update(sqlBuilder.toString(), params);
     }
 
     public void excluiVinho(Long codigo) {

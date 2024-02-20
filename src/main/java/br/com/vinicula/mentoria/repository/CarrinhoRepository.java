@@ -38,12 +38,25 @@ public class CarrinhoRepository {
     }
 
     public void atualizaCarrinho(Long codigo, Carrinho carrinho) {
-        String sql = "UPDATE tbcarrinho SET estadocar = :estado, fkcodigocli = :codigocli WHERE pkcodigocar = :codigo";
+        StringBuilder sqlBuilder = new StringBuilder("UPDATE tbcarrinho SET ");
         MapSqlParameterSource params = new MapSqlParameterSource();
+
+        if (carrinho.getEstado() != null) {
+            sqlBuilder.append("estadocar = :estado, ");
+            params.addValue("estado", carrinho.getEstado());
+        }
+
+        if (carrinho.getCodigoCli() != null) {
+            sqlBuilder.append("fkcodigocli = :codigocli, ");
+            params.addValue("codigocli", carrinho.getCodigoCli());
+        }
+
+        sqlBuilder.delete(sqlBuilder.length() - 2, sqlBuilder.length());
+        sqlBuilder.append(" WHERE pkcodigocar = :codigo");
+
         params.addValue("codigo", codigo);
-        params.addValue("estado", carrinho.getEstado());
-        params.addValue("codigocli", carrinho.getCodigoCli());
-        jdbcTemplate.update(sql, params);
+
+        jdbcTemplate.update(sqlBuilder.toString(), params);
     }
 
     public void excluiCarrinho(Long codigo) {

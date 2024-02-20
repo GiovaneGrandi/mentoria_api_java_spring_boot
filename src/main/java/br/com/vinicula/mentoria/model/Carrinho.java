@@ -4,7 +4,7 @@ public class Carrinho {
 
     private long codigo;
     private String estado;
-    private long codigocli;
+    private Long codigocli;
 
     public Carrinho(long codigo, String estado, long codigocli) {
         this.codigo = codigo;
@@ -20,7 +20,7 @@ public class Carrinho {
         return estado;
     }
 
-    public long getCodigoCli() {
+    public Long getCodigoCli() {
         return codigocli;
     }
 

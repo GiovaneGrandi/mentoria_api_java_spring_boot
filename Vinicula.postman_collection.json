@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "ea79a7b7-a32e-48e0-b7d1-4068c1489cfb",
+		"name": "Vinicula",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30607456"
+	},
+	"item": [
+		{
+			"name": "Pega todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/{{tabela}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"{{tabela}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pega por código",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/{{tabela}}/{{codigo}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"{{tabela}}",
+						"{{codigo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adiciona",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/{{tabela}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"{{tabela}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualiza",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/{{tabela}}/{{codigo}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"{{tabela}}",
+						"{{codigo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleta",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/{{tabela}}/{{codigo}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"{{tabela}}",
+						"{{codigo}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

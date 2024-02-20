@@ -1,0 +1,52 @@
+CREATE TABLE tbcliente (
+    pkcodigocli SERIAL PRIMARY KEY,
+    cpfcli VARCHAR(11) NOT NULL,
+    nomecli VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tbcarrinho (
+    pkcodigocar SERIAL PRIMARY KEY,
+    estadocar VARCHAR(20) NOT NULL CHECK (estadocar IN ('in progress', 'finished')),
+    fkcodigocli INTEGER REFERENCES tbcliente(pkcodigocli) ON DELETE CASCADE
+);
+
+CREATE TABLE tbcategoria (
+    pkcodigocat SERIAL PRIMARY KEY,
+    nomecat VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tbtipo (
+    pkcodigotip SERIAL PRIMARY KEY,
+    nometip VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tbvinho (
+    pkcodigovin SERIAL PRIMARY KEY,
+    nomevin VARCHAR(100) NOT NULL,
+    precovin NUMERIC(10, 2) NOT NULL,
+    anovin INTEGER NOT NULL,
+    paisvin VARCHAR(100) NOT NULL,
+    estoquevin INTEGER NOT NULL,
+    fkcodigocat INTEGER REFERENCES tbcategoria(pkcodigocat) ON DELETE CASCADE,
+    fkcodigotip INTEGER REFERENCES tbtipo(pkcodigotip) ON DELETE CASCADE
+);
+
+-- Adicionando alguns dados de teste
+INSERT INTO tbcliente (cpfcli, nomecli) VALUES
+('12345678901', 'João'),
+('98765432109', 'Maria');
+
+INSERT INTO tbcategoria (nomecat) VALUES
+('Tinto'),
+('Branco'),
+('Rosé');
+
+INSERT INTO tbtipo (nometip) VALUES
+('Seco'),
+('Suave'),
+('Meio Seco');
+
+INSERT INTO tbvinho (nomevin, precovin, anovin, paisvin, estoquevin, fkcodigocat, fkcodigotip) VALUES
+('Vinho Tinto 1', 29.99, 2019, 'Brasil', 50, 1, 1),
+('Vinho Branco 1', 24.99, 2020, 'Argentina', 30, 2, 2),
+('Vinho Rosé 1', 19.99, 2018, 'Chile', 40, 3, 3);

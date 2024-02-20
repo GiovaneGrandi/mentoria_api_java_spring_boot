@@ -38,12 +38,25 @@ public class ClienteRepository {
     }
 
     public void atualizaCliente(Long codigo, Cliente cliente) {
-        String sql = "UPDATE tbcliente SET cpfcli = :cpf, nomecli = :nome WHERE pkcodigocli = :codigo";
+        StringBuilder sqlBuilder = new StringBuilder("UPDATE tbcliente SET ");
         MapSqlParameterSource params = new MapSqlParameterSource();
+
+        if (cliente.getCpf() != null) {
+            sqlBuilder.append("cpfcli = :cpf, ");
+            params.addValue("cpf", cliente.getCpf());
+        }
+
+        if (cliente.getNome() != null) {
+            sqlBuilder.append("nomecli = :nome, ");
+            params.addValue("nome", cliente.getNome());
+        }
+
+        sqlBuilder.delete(sqlBuilder.length() - 2, sqlBuilder.length());
+        sqlBuilder.append(" WHERE pkcodigocli = :codigo");
+
         params.addValue("codigo", codigo);
-        params.addValue("cpf", cliente.getCpf());
-        params.addValue("nome", cliente.getNome());
-        jdbcTemplate.update(sql, params);
+
+        jdbcTemplate.update(sqlBuilder.toString(), params);
     }
 
     public void excluiCliente(Long codigo) {
